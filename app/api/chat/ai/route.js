@@ -112,6 +112,15 @@ Current User Message: ${prompt}
 Instructions:
 - The user is referencing previous context, so carefully review the context chain above
 - If they mention "previous", "last", "that document", etc., use the relevant information from the context
+- Format your response using proper markdown:
+  * Use **bold** for emphasis
+  * Use bullet points with - or *
+  * Use numbered lists with 1. 2. 3.
+  * Use \`code\` for inline code
+  * Use \`\`\`language for code blocks
+  * Use ## for headings
+  * Use > for blockquotes
+  * Use tables with | pipes when showing structured data
 - Provide a clear and accurate response based on both the context and current message`
             : `You are a helpful assistant. Here is the recent conversation context:
 ${contextChain}
@@ -119,11 +128,23 @@ ${documentContext}
 
 Current User Message: ${prompt}
 
-Please respond appropriately to the user's message.`;
+Instructions:
+- Format your response using proper markdown:
+  * Use **bold** for emphasis
+  * Use bullet points with - or *
+  * Use numbered lists with 1. 2. 3.
+  * Use \`code\` for inline code
+  * Use \`\`\`language for code blocks
+  * Use ## for headings
+  * Use > for blockquotes
+  * Use tables with | pipes when showing structured data
+- Please respond appropriately to the user's message.`;
 
         const completion = await openai.chat.completions.create({
             messages: [{ role: "user", content: promptTemplate }],
-            model: "openai/gpt-oss-20b",
+            model: "llama-3.3-70b-versatile",
+            // model: "openai/gpt-oss-20b",
+            // model: "openai/gpt-oss-120b",
         });
 
         const message = completion.choices[0].message;

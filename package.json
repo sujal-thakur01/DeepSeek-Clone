@@ -19,6 +19,7 @@
     "@google/generative-ai": "^0.24.1",
     "@langchain/community": "^0.3.57",
     "@langchain/core": "^0.3.78",
+    "@tailwindcss/typography": "^0.5.19",
     "axios": "^1.12.2",
     "dotenv": "^16.6.1",
     "langchain": "^0.3.36",
@@ -32,6 +33,7 @@
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.6.0",
     "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "svix": "^1.77.0",
     "tesseract.js": "^6.0.1"
   },

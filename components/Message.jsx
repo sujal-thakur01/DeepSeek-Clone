@@ -1,15 +1,19 @@
 import { assets } from '@/assets/assets'
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import Prism from 'prismjs'
 import toast from 'react-hot-toast'
 
 const Message = ({role, content, files = []}) => {
+    const messageRef = useRef(null)
 
     useEffect(()=>{
-        Prism.highlightAll()
-    }, [content])
+        if (messageRef.current && role === 'assistant') {
+            Prism.highlightAllUnder(messageRef.current)
+        }
+    }, [content, role])
 
     const copyMessage = ()=>{
         navigator.clipboard.writeText(content)
@@ -65,24 +69,34 @@ const Message = ({role, content, files = []}) => {
                                 (
                                         <>
                                         <Image src={assets.logo_icon} alt='' className='h-9 w-9 p-1 border border-white/15 rounded-full flex-shrink-0'/>
-                                        <div className='prose prose-invert prose-sm max-w-none w-full overflow-x-auto'>
+                                        <div ref={messageRef} className='prose prose-invert prose-sm max-w-none w-full overflow-x-auto'>
                                             <Markdown
+                                                remarkPlugins={[remarkGfm]}
                                                 components={{
+                                                    // Handle code blocks with <pre>
+                                                    pre({children}) {
+                                                        return <pre className="bg-gray-900 p-4 rounded-lg overflow-x-auto my-4">{children}</pre>
+                                                    },
+                                                    // Handle inline and block code
                                                     code({node, inline, className, children, ...props}) {
                                                         const match = /language-(\w+)/.exec(className || '')
-                                                        return !inline ? (
-                                                            <pre className={className}>
-                                                                <code className={`language-${match?.[1] || ''}`} {...props}>
-                                                                    {children}
-                                                                </code>
-                                                            </pre>
-                                                        ) : (
+                                                        return inline ? (
                                                             <code className="bg-gray-800 px-1 py-0.5 rounded text-sm" {...props}>
+                                                                {children}
+                                                            </code>
+                                                        ) : (
+                                                            <code className={`language-${match?.[1] || ''}`} {...props}>
                                                                 {children}
                                                             </code>
                                                         )
                                                     },
-                                                    p: ({children}) => <p className="mb-4 leading-7">{children}</p>,
+                                                    p: ({children, node}) => {
+                                                        // Check if paragraph contains only a code block
+                                                        if (node?.children?.[0]?.tagName === 'code') {
+                                                            return <>{children}</>
+                                                        }
+                                                        return <p className="mb-4 leading-7">{children}</p>
+                                                    },
                                                     ul: ({children}) => <ul className="list-disc ml-4 mb-4 space-y-2">{children}</ul>,
                                                     ol: ({children}) => <ol className="list-decimal ml-4 mb-4 space-y-2">{children}</ol>,
                                                     li: ({children}) => <li className="leading-7">{children}</li>,
@@ -100,19 +114,29 @@ const Message = ({role, content, files = []}) => {
                                                         </a>
                                                     ),
                                                     table: ({children}) => (
-                                                        <div className="overflow-x-auto my-4">
-                                                            <table className="min-w-full border border-gray-700">
+                                                        <div className="overflow-x-auto my-4 rounded-lg border border-gray-700">
+                                                            <table className="min-w-full divide-y divide-gray-700">
                                                                 {children}
                                                             </table>
                                                         </div>
                                                     ),
+                                                    thead: ({children}) => (
+                                                        <thead className="bg-gray-800">
+                                                            {children}
+                                                        </thead>
+                                                    ),
+                                                    tbody: ({children}) => (
+                                                        <tbody className="divide-y divide-gray-700 bg-gray-900">
+                                                            {children}
+                                                        </tbody>
+                                                    ),
                                                     th: ({children}) => (
-                                                        <th className="border border-gray-700 px-4 py-2 bg-gray-800 font-semibold">
+                                                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                                                             {children}
                                                         </th>
                                                     ),
                                                     td: ({children}) => (
-                                                        <td className="border border-gray-700 px-4 py-2">
+                                                        <td className="px-4 py-3 text-sm">
                                                             {children}
                                                         </td>
                                                     ),
