@@ -33,6 +33,13 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# But keep .env.example for reference
+!.env.example
+
+# Temporary file uploads (auto-deleted)
+/Documents/
+Documents/
+
 # vercel
 .vercel
 

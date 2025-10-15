@@ -8,6 +8,9 @@ const ChatSchema = new mongoose.Schema(
                 role: {type: String, required: true},
                 content: {type: String, required: true},
                 timestamp: {type: Number, required: true},
+                hasFiles: {type: Boolean, default: false},
+                files: [String],  // Simple array of filenames
+                documentData: {type: String, default: ''}  // Extracted text from uploaded documents
             },
         ],
         userId: {type: String, required: true},
