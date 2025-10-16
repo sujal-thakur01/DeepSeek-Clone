@@ -177,23 +177,21 @@ const PromptBox = ({setIsLoading, isLoading, isAnimatingRef}) => {
                 setIsTyping(true);
                 if (isAnimatingRef) isAnimatingRef.current = true;
                 function animateMessage() {
-                    if (stopAnimationRef.current || currentIndex > messageTokens.length) {
+                    if (stopAnimationRef.current || currentIndex >= messageTokens.length) {
                         if (isAnimatingRef) isAnimatingRef.current = false;
                         setIsTyping(false);
-                        if (stopAnimationRef.current) {
-                            // Load full message instantly
-                            setSelectedChat(prev => {
-                                const fullMessage = {
-                                    ...baseAssistantMessage,
-                                    content: fullMessageRef.current,
-                                };
-                                const updatedMessages = [
-                                    ...prev.messages.slice(0, -1),
-                                    fullMessage
-                                ];
-                                return { ...prev, messages: updatedMessages };
-                            });
-                        }
+                        // Always load the full message at the end
+                        setSelectedChat(prev => {
+                            const fullMessage = {
+                                ...baseAssistantMessage,
+                                content: fullMessageRef.current,
+                            };
+                            const updatedMessages = [
+                                ...prev.messages.slice(0, -1),
+                                fullMessage
+                            ];
+                            return { ...prev, messages: updatedMessages };
+                        });
                         return;
                     }
                     // Reveal 8 words per interval for much faster output
@@ -210,7 +208,10 @@ const PromptBox = ({setIsLoading, isLoading, isAnimatingRef}) => {
                         return { ...prev, messages: updatedMessages };
                     });
                     currentIndex += revealCount;
-                    if (currentIndex <= messageTokens.length) {
+                    if (currentIndex < messageTokens.length) {
+                        setTimeout(animateMessage, 5);
+                    } else {
+                        // Animation complete, trigger final update
                         setTimeout(animateMessage, 5);
                     }
                 }

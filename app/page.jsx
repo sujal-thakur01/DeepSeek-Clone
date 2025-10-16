@@ -3,6 +3,7 @@ import { assets } from "@/assets/assets";
 import Message from "@/components/Message";
 import PromptBox from "@/components/PromptBox";
 import Sidebar from "@/components/Sidebar";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -45,6 +46,7 @@ export default function Home() {
 
   return (
     <div>
+      <ThemeToggle />
       <div className="flex h-screen">
         <Sidebar expand={expand} setExpand={setExpand}/>
         <div className="flex-1 flex flex-col items-center justify-center px-4 pb-8 bg-[#292a2d] text-white relative">
