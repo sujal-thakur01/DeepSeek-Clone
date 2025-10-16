@@ -85,7 +85,6 @@ npm run lint    # Lint code
 
 ## Troubleshooting
 
-**Module errors?**
 ```bash
 rm -rf node_modules package-lock.json
 npm install --legacy-peer-deps
