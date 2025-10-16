@@ -14,21 +14,32 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const {selectedChat} = useAppContext()
   const containerRef = useRef(null)
+  const userScrolledRef = useRef(false)
+  const isAnimatingRef = useRef(false)
 
   useEffect(()=>{
     if(selectedChat){
       setMessages(selectedChat.messages)
+      userScrolledRef.current = false // Reset on chat change
     }
   },[selectedChat])
 
   useEffect(()=>{
-    if(containerRef.current){
+    if(containerRef.current && !userScrolledRef.current){
       containerRef.current.scrollTo({
         top: containerRef.current.scrollHeight,
         behavior: "smooth",
       })
     }
   },[messages])
+
+  // Detect user scroll to disable auto-scroll
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+    userScrolledRef.current = !isNearBottom;
+  }
 
 
 
@@ -46,14 +57,15 @@ export default function Home() {
           {messages.length === 0 ? (
             <>
             <div className="flex items-center gap-3">
-              <Image src={assets.logo_icon} alt="" className="h-16"/>
-              <p className="text-2xl font-medium">Hi, I'm DeepSeek.</p>
+              <Image src={assets.logo_icon} alt="" className="w-12 h-auto"/>
+              <p className="text-2xl font-medium">Hi, I'm NoBody.</p>
             </div>
             <p className="text-sm mt-2">How can I help you today?</p>
             </>
           ):
           (
           <div ref={containerRef}
+          onScroll={handleScroll}
           className="relative flex flex-col items-center justify-start w-full mt-20 max-h-screen overflow-y-auto"
           > 
           <p className="fixed top-8 border border-transparent hover:border-gray-500/50 py-1 px-2 rounded-lg font-semibold mb-6">{selectedChat.name}</p>
@@ -85,8 +97,8 @@ export default function Home() {
           </div>
         )
         }
-        <PromptBox isLoading={isLoading} setIsLoading={setIsLoading}/>
-        <p className="text-xs absolute bottom-1 text-gray-500">AI-generated, for reference only</p>
+        <PromptBox isLoading={isLoading} setIsLoading={setIsLoading} isAnimatingRef={isAnimatingRef}/>
+        <p className="text-xs absolute bottom-1 text-gray-500">Feel free to ask....</p>
 
         </div>
       </div>
