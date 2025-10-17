@@ -38,7 +38,7 @@ html.light [class*="bg-[#212327]"] {
 }
 
 html.light [class*="bg-[#414158]"] {
-  background-color: #93c5fd !important;
+  background-color: #d2dce6 !important;
 }
 
 html.light [class*="text-white"],
@@ -47,9 +47,9 @@ html.light [class*="text-gray"] {
 }
 
 html.light [class*="border-white"],
-html.light [class*="border-gray"] {
+/* html.light [class*="border-gray"] {
   border-color: #d1d5db !important;
-}
+} */
 
 html.light textarea,
 html.light input,
@@ -78,6 +78,17 @@ html.light button.bg-primary:hover,
 html.light button[class*="bg-primary"]:hover {
   background-color: #2563eb !important;
   opacity: 1 !important;
+}
+
+/* Chat title in light mode - darker background */
+html.light .fixed.top-8 {
+  /* background-color: #babecf !important; */
+  color: #000000 !important;
+  /* border-color: #93c5fd !important; */
+}
+
+html.light .fixed.top-8:hover {
+  border-color: #60a5fa !important;
 }
 
 ::-webkit-scrollbar{
