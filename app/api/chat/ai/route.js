@@ -199,6 +199,8 @@ Answer ONLY: YES or NO`;
         console.log(`Used past memory: ${usedPastMemory}`);
         let promptTemplate;
         if (webResults && webResults.answer) {
+            const sourcesFormatted = (webResults.references || []).map((ref, i) => `[${i+1}]: [${ref.title}](${ref.url})`).join('\n');
+            
             promptTemplate = `You are a helpful AI assistant with access to conversation history and web search results.${agentContextNote}${reportModeNote}
 
 ${isReferencingPrevious ? contextChain : ''}${documentContext}
@@ -208,17 +210,17 @@ ${webResults.answer}
 
 Current User Question: ${prompt}
 
-Instructions:
+CRITICAL INSTRUCTIONS:
 - Synthesize information from ALL available sources: conversation history, documents, and web search.
-- Reference past exchanges when relevant to provide continuity.
-- When citing web sources, use [1], [2], etc. inline.
-- If Report Mode is enabled, follow the strict report structure.
-- Be comprehensive yet concise in your answer.
+- When citing web sources, use [1], [2], etc. inline in your answer.
+- MANDATORY: At the end of your response, you MUST include a "Sources:" section with all the sources listed below.
+- Format the Sources section EXACTLY as shown below, with each source on a new line.
+- If Report Mode is enabled, follow the strict report structure and include Sources at the very end.
 
-Sources:
-${(webResults.references || []).map((ref, i) => `[${i+1}]: [${ref.title}](${ref.url})`).join('\\n')}
+Sources to include at the end of your response:
+${sourcesFormatted}
 
-Respond now:`;
+Respond now with your answer followed by the Sources section:`;
         } else {
             promptTemplate = isReferencingPrevious
                 ? `You are a helpful AI assistant with full access to conversation history.${agentContextNote}${reportModeNote}

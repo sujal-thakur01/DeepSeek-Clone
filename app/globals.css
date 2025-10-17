@@ -91,6 +91,22 @@ html.light .fixed.top-8:hover {
   border-color: #60a5fa !important;
 }
 
+/* Toast notifications in light mode */
+html.light [data-sonner-toast],
+html.light [role="status"],
+html.light .Toaster__toast,
+html.light div[style*="background: black"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+html.light [data-sonner-toast] *,
+html.light [role="status"] *,
+html.light .Toaster__toast * {
+  color: #000000 !important;
+}
+
 ::-webkit-scrollbar{
   display: none;
 }
