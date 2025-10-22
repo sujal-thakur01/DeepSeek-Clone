@@ -31,7 +31,7 @@ AI chat with **document processing**, **web search**, and a **researcher agent**
 
 ## ⚙️ Quick Start
 
-```bash
+
 # Clone the repository
 git clone https://github.com/sujal-thakur01/DeepSeek-Clone.git
 cd DeepSeek-Clone
