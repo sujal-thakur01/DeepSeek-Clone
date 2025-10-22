@@ -16,7 +16,7 @@ AI chat with document processing and image analysis powered by Groq and Gemini V
 ## Quick Start
 
 ```bash
-git clone https://github.com/prathamtomar99/DeepSeek-Clone.git
+git clone https://github.com/sujal-thakur01/DeepSeek-Clone.git
 cd deepseek
 npm install
 cp .env.example .env
