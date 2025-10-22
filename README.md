@@ -116,7 +116,9 @@ Works on Netlify, Railway, or any Node.js hosting.
 
 ## License
 
-MIT © [Pratham Tomar](https://github.com/prathamtomar99)
+MIT © Pratham Tomar
+Enhanced by Sujal Thakur — Added Web Search, Researcher Agent & Gemini Vision
+
 
 ---
 
