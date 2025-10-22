@@ -32,24 +32,32 @@ AI chat with **document processing**, **web search**, and a **researcher agent**
 ## ⚙️ Quick Start
 
 ```bash
-git clone https://github.com/prathamtomar99/DeepSeek-Clone.git
+# Clone the repository
+git clone https://github.com/sujal-thakur01/DeepSeek-Clone.git
 cd DeepSeek-Clone
+
+# Install dependencies
 npm install
+
+# Setup environment variables
 cp .env.example .env
+
 # Fill in API keys below
 npm run verify
+
+# Run the development server
 npm run dev
-Open http://localhost:3000
+Now open http://localhost:3000 🎉
 🔑 Environment Setup
-Create .env with:
+Create a .env file and add the following:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
 CLERK_SECRET_KEY=sk_test_xxx
 SIGNING_SECRET=whsec_xxx
 MONGODB_URI=mongodb+srv://xxx
 GROQ_API_KEY=gsk_xxx
-GOOGLE_API_KEY=AIzaSy_xxx  # for Gemini Vision
-TAVILY_API_KEY=tvly_xxx    # for Web Search
-Get API Keys from:
+GOOGLE_API_KEY=AIzaSy_xxx   # for Gemini Vision
+TAVILY_API_KEY=tvly_xxx     # for Web Search
+🪪 Get API Keys from:
 Clerk — Authentication
 MongoDB Atlas — Database
 Groq Console — AI API
@@ -78,7 +86,8 @@ Researcher Agent (DeepThink) → Produces structured Markdown reports (Title, Su
 Gemini Vision → Reads and extracts text from uploaded .png, .jpg, etc.
 Response Generation → Uses llama-3.3-70b-versatile (Groq API) to synthesize all sources
 Persistence → Saves user + assistant messages to MongoDB
-Flow: Clerk Auth → Load Memory → Classify Query → (Optional) Web Search → (Optional) DeepThink Mode → AI Response → MongoDB Save
+Flow:
+Clerk Auth → Load Memory → Classify Query → (Optional) Web Search → (Optional) DeepThink Mode → AI Response → MongoDB Save
 🔗 Key Endpoints
 POST /api/chat/ai        # Chat with Groq AI + Memory + Web Search
 POST /api/chat/upload    # Upload & process documents/images
@@ -91,21 +100,28 @@ If yes, loads relevant history & context from MongoDB
 If Web Search is enabled, queries Tavily and merges results
 Generates structured AI response (Groq) → Saves conversation
 🩵 Troubleshooting
+# Reinstall dependencies cleanly
 rm -rf node_modules package-lock.json
 npm install --legacy-peer-deps
 Common fixes:
-Restart after .env changes
+Restart server after .env changes
 Check MongoDB IP whitelist
-Verify NEXT_PUBLIC_ prefix for Clerk keys
+Ensure Clerk keys start with NEXT_PUBLIC_ prefix
 📚 Documentation
 SETUP.md — Full setup guide
 CONTRIBUTING.md — Contribution workflow
 LICENSE — MIT License
 🚀 Deploy
-Vercel (Recommended)
-Push to GitHub
-Import in Vercel
+✅ Vercel (Recommended)
+# 1. Push to GitHub
+git add .
+git commit -m "Initial commit"
+git push origin main
+Then:
+Go to Vercel
+Import your GitHub repository
 Add environment variables
 Deploy 🚀
 📄 License
-MIT © Sujal Thakur — Added Web Search, Researcher Agent & Gemini Vision
+MIT © Sujal Thakur
+Enhanced with Web Search, Researcher Agent & Gemini Vision
